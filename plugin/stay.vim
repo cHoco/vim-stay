@@ -52,7 +52,7 @@ function! s:setup(defaults) abort
 
     " |v:this_session| is not set for view sessions, so we roll our own (ignored
     " when 'viewdir' is empty or set to the current directory hierarchy, as that
-    " would catch every filed sourced from there, not just view session files)
+    " would catch every file sourced from there, not just view session files)
     autocmd SourcePre ?*
           \ if &viewdir !~? '\v^$|^\.' && stridx(expand('<afile>'), &viewdir) is 0 |
           \   let b:stay_loaded_view = expand('<afile>') |
