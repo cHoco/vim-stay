@@ -22,6 +22,8 @@ function! stay#view#make(winnr) abort
     let l:dopost = 1
     mkview
     return 1
+  catch " silently return on errors
+    return 0
   finally
     if get(l:, 'dopost', 0) is 1
       call s:doautocmd('User', 'BufStaySavePost')
