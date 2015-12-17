@@ -39,6 +39,12 @@ function! stay#view#load(winnr) abort
     return 0
   endif
 
+  " ensure we do not react to a stale view load
+  if exists('b:stay_loaded_view')
+    let l:stay_loaded_view = b:stay_loaded_view
+    unlet b:stay_loaded_view
+  endif
+
   call s:doautocmd('User', 'BufStayLoadPre')
   " the `doautoall SessionLoadPost` in view session files significantly
   " slows down buffer load, hence we suppress it...
@@ -60,6 +66,9 @@ function! stay#view#load(winnr) abort
   catch " silently return on errors
     return 0
   finally
+    if !exists('b:stay_loaded_view') && exists('l:stay_loaded_view')
+      let b:stay_loaded_view = l:stay_loaded_view
+    endif
     let &eventignore = l:eventignore
     call s:doautocmd('User', 'BufStayLoadPost')
     call s:win.back()
