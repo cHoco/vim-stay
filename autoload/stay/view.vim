@@ -42,7 +42,7 @@ function! stay#view#load(winnr) abort
   " restoring folds is slow, don’t do it if a session does too
   " note sessions always restore the cursor
   if get(g:, 'SessionLoad', 0) is 1
-\ && index(split(&sessionoptions, ','), '^folds$') isnot -1
+\ && index(split(&sessionoptions, ','), 'folds') isnot -1
     return 0
   endif
 
