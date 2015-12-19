@@ -22,7 +22,10 @@ function! stay#view#make(winnr) abort
     let l:dopost = 1
     mkview
     return 1
-  catch " silently return on errors
+  catch /\vE(166|190|212)/ " no write access to existing view file
+    echomsg "vim-stay could not write the view session file!"
+    return 0
+  catch " silently return on other errors
     return 0
   finally
     if get(l:, 'dopost', 0) is 1
@@ -59,7 +62,10 @@ function! stay#view#load(winnr) abort
       silent! normal! zOzz
     endif
     return 1
-  catch " silently return on errors
+  catch /\vE48[45]/ " no read access to existing view file
+    echomsg "vim-stay could not read the view session file!"
+    return 0
+  catch " silently return on other errors
     return 0
   finally
     let &eventignore = l:eventignore
