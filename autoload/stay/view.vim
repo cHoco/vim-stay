@@ -39,13 +39,6 @@ function! stay#view#load(winnr) abort
     return 0
   endif
 
-  " restoring folds is slow, don’t do it if a session does too
-  " note sessions always restore the cursor
-  if get(g:, 'SessionLoad', 0) is 1
-\ && index(split(&sessionoptions, ','), 'folds') isnot -1
-    return 0
-  endif
-
   " ensure we do not react to a stale view load
   if exists('b:stay_loaded_view')
     let l:stay_loaded_view = b:stay_loaded_view

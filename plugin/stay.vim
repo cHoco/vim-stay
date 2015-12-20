@@ -64,7 +64,9 @@ function! s:setup(defaults) abort
           \   call stay#view#make(bufwinnr(str2nr(expand('<abuf>')))) |
           \ endif
     autocmd BufWinEnter ?* nested
-          \ if stay#ispersistent(str2nr(expand('<abuf>')), g:volatile_ftypes) |
+          \ if stay#ispersistent(str2nr(expand('<abuf>')), g:volatile_ftypes)
+          \ && !(get(g:, 'SessionLoad', 0) is 1
+          \ && index(split(&sessionoptions, ','), 'folds') isnot -1) |
           \   call stay#view#load(bufwinnr(str2nr(expand('<abuf>')))) |
           \ endif
 
